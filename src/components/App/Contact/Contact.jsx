@@ -2,7 +2,7 @@ import {useDispatch} from 'react-redux';
 import css from './Contact.module.css';
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import { FaUser } from 'react-icons/fa';
-import { deleteContact } from '../../../redux/contactsSlice';
+import { deleteContact } from '../../../redux/contactsOps';
 
 export default function Contact({ data: { name, number, id },  }) {
 

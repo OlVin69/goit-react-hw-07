@@ -1,29 +1,50 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchContacts, deleteContact } from "./contactsOps";
 
 const slice = createSlice({
     name: "contacts",
     initialState: {
-            items: []  
+            items: [],
+            isLoading: false,
+            error: null,  
     },
-    reducers: {
-        addContact:{
-            reducer: (state, action) => {state.items.push(action.payload)}, 
-            prepare: ({name, number}) => {return{
-                payload:{
-                    name,
-                    number,
-                    id: nanoid(),
-                }
-            }
-        }
-    },
-    deleteContact(state, action) {
-        const index = state.items.findIndex((items) => items.id === action.payload);
-        state.items.splice(index, 1);
-      },
-},
+
+    extraReducers:(builder) => 
+       builder
+       .addCase(fetchContacts.pending, (state)=>{
+        state.error = null;
+        state.isLoading = true;
+       })
+       .addCase(fetchContacts.fulfilled, (state, action)=>{
+        state.isLoading = false;
+        state.items = action.payload;
+        
+       }) 
+       .addCase(fetchContacts.rejected, (state, action)=>{
+        state.isLoading = false;
+        state.error = action.payload;
+       })
+       .addCase(deleteContact.pending, (state)=>{
+        state.error = null;
+        state.isLoading = true;
+       })
+       .addCase(deleteContact.fulfilled, (state, action)=>{
+        state.isLoading = false;
+        state.items = 
+        
+       }) 
+       .addCase(deleteContact.rejected, (state, action)=>{
+        state.isLoading = false;
+        state.error = action.payload;
+       })
+
+
 });
 
-export default slice.reducer;
+
+
+export  const contactsReducer = slice.reducer;
 export const {addContact, deleteContact} = slice.actions;
 export const selectContacts = state => state.contacts.items;
+export const selectIsLoading = state => state.contacts.isLoading;
+export const selectError = state => state.contacts.error;
