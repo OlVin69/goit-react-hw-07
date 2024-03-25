@@ -30,7 +30,7 @@ const slice = createSlice({
        })
        .addCase(deleteContact.fulfilled, (state, action)=>{
         state.isLoading = false;
-        const index = state.items.findIndex((items) => items.id === action.payload);
+        const index = state.items.findIndex((items) => items.id === action.payload.id);
         state.items.splice(index, 1);
        }) 
        .addCase(deleteContact.rejected, (state, action)=>{

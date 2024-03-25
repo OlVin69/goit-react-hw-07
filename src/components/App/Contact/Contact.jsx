@@ -4,7 +4,7 @@ import { BsFillTelephoneFill } from 'react-icons/bs';
 import { FaUser } from 'react-icons/fa';
 import { deleteContact } from '../../../redux/contactsOps';
 
-export default function Contact({ data: { name, number, id },  }) {
+export default function Contact({ data:{name, number, id} }) {
 
 const dispatch = useDispatch();
 const handleDelete = () => dispatch(deleteContact(id));
